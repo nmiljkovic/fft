@@ -8,16 +8,16 @@ See it in action at [http://proof.github.io/fft](http://proof.github.io/fft)!
 Here are some examples you can play with:
 
 ###### Sine wave at 50 Hz
-x(t): sin(2 * PI * 50 * t)
-sampling rate: 150
-sample start time: 0
-sample count: 300
+* x(t): sin(2 * PI * 50 * t)
+* sampling rate: 150
+* sample start time: 0
+* sample count: 300
 
 ###### Using Heaviside
-x(t): u(t) - u(t - 4.01)
-sampling rate: 10
-sample start time: 0
-sample count: 100
+* x(t): u(t) - u(t - 4.01)
+* sampling rate: 10
+* sample start time: 0
+* sample count: 100
 
 ## Made using:
 
