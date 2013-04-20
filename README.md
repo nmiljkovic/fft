@@ -1,7 +1,8 @@
 # Fast Fourier Transform
 
-This is a simple recursive implementation of the Cooley-Tukey FFT in-place algorithm.
-It uses bit reversal to arrange the input array in such an order it can be calculated with a couple of iterations.
+This is a simple recursive implementation of the Cooley-Tukey FFT in-place algorithm
+for both forward and inverse transforms. It uses bit reversal to arrange the input array
+for the in-place algorithm.
 
 See it in action at [http://proof.github.io/fft](http://proof.github.io/fft)!
 
