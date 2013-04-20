@@ -125,6 +125,14 @@ $(function() {
         // we're not interested in complex numbers - abs(fft(x, N))
         magnitude_spectrum_abs = magnitude(magnitude_spectrum);
 
+        // let us do the inverse process now!
+        original_signal_inverse = [];
+        for (i = 0; i < magnitude_spectrum_abs.length; i++)
+            original_signal_inverse.push(magnitude_spectrum[i]);
+
+        ifft(original_signal_inverse, original_signal_inverse.length);
+        //original_signal_inverse = magnitude(original_signal_inverse);
+
         // populate the final parameters fields
         $('.parameters-final').html(__template('#parameters', {
             equation: x_t,
@@ -144,12 +152,12 @@ $(function() {
             showOff.show();
 
             // gogo!
-            draw_graphs(t_start, t_end, sampling_rate, sample_count, x_t_continuos, x_discrete, magnitude_spectrum_abs);
+            draw_graphs(t_start, t_end, sampling_rate, sample_count, x_t_continuos, x_discrete, magnitude_spectrum_abs, original_signal_inverse);
             showOff.animate({ left: 0, opacity: 1 }, 1000);
         });
     });
 
-    var draw_graphs = function(t_start, t_end, sampling_rate, sample_count, x_t_continuos, x_discrete, mag_spectrum)
+    var draw_graphs = function(t_start, t_end, sampling_rate, sample_count, x_t_continuos, x_discrete, mag_spectrum, original_signal_inv)
     {
         $.plot('#original-signal', [{
             label: "x(t)",
@@ -189,7 +197,8 @@ $(function() {
 
         // process the magnitude spectrum
         var magnitude_spectrum = [];
-        for (var i = 0; i < mag_spectrum.length / 2; i++)
+        var i;
+        for (i = 0; i < mag_spectrum.length / 2; i++)
         {
             magnitude_spectrum.push([
                 i / mag_spectrum.length * sampling_rate,    // x label [Hz]
@@ -213,6 +222,35 @@ $(function() {
                 content: "f: %x Hz , |X(f)|: %y"
             }
         });
+
+        // process the original signal we got by doing an ifft
+        var original_signal_inverse = [];
+        for (i = 0; i < x_discrete.length; i++)
+        {
+            original_signal_inverse.push([
+                i,                                                                        // x label [n]
+                sampling_rate / x_discrete.length * original_signal_inv[i].real  // correct amplitude by multiplying with 1/(NT)
+            ]);
+        }
+
+        $.plot('#original-signal-inverse', [{
+            label: 'x[n] inverse',
+            data: original_signal_inverse,
+            color: 2,
+            points: { show: true },
+            bars: { show: true, lineWidth: 0.05, barWidth: 0.05, align: 'center' }
+        }], {
+            grid: { hoverable: true },
+            yaxis: {
+                tickDecimals: 2
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "n: %x , x[n]: %y"
+            }
+        });
+
+        console.log(original_signal_inverse);
     };
 
     // quick and dirty template because I'm lazy to download handlebars
