@@ -198,7 +198,7 @@ $(function() {
         // process the magnitude spectrum
         var magnitude_spectrum = [];
         var i;
-        for (i = 0; i < mag_spectrum.length / 2; i++)
+        for (i = 0; i < mag_spectrum.length / 2 + 1; i++)
         {
             magnitude_spectrum.push([
                 i / mag_spectrum.length * sampling_rate,    // x label [Hz]
@@ -209,9 +209,9 @@ $(function() {
         $.plot('#magnitude-spectrum', [{
             label: '|X(f)|',
             data: magnitude_spectrum,
-            color: 2,
-            points: { show: true },
-            bars: { show: true, lineWidth: 0.05, barWidth: 0.05, align: 'center' }
+            color: 2//,
+            //points: { show: true },
+            //bars: { show: true, lineWidth: 0.05, barWidth: 0.05, align: 'center' }
         }], {
             grid: { hoverable: true },
             yaxis: {
